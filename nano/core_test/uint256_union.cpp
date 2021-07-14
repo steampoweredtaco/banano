@@ -1,5 +1,5 @@
-#include <nano/core_test/testutil.hpp>
 #include <nano/secure/common.hpp>
+#include <nano/test_common/testutil.hpp>
 
 #include <gtest/gtest.h>
 
@@ -168,29 +168,29 @@ TEST (uint256_union, key_encryption)
 {
 	nano::keypair key1;
 	nano::raw_key secret_key;
-	secret_key.data.bytes.fill (0);
+	secret_key.clear ();
 	nano::uint256_union encrypted;
 	encrypted.encrypt (key1.prv, secret_key, key1.pub.owords[0]);
 	nano::raw_key key4;
 	key4.decrypt (encrypted, secret_key, key1.pub.owords[0]);
 	ASSERT_EQ (key1.prv, key4);
-	auto pub (nano::pub_key (key4.as_private_key ()));
+	auto pub (nano::pub_key (key4));
 	ASSERT_EQ (key1.pub, pub);
 }
 
 TEST (uint256_union, encryption)
 {
 	nano::raw_key key;
-	key.data.clear ();
+	key.clear ();
 	nano::raw_key number1;
-	number1.data = 1;
+	number1 = 1;
 	nano::uint256_union encrypted1;
-	encrypted1.encrypt (number1, key, key.data.owords[0]);
+	encrypted1.encrypt (number1, key, key.owords[0]);
 	nano::uint256_union encrypted2;
-	encrypted2.encrypt (number1, key, key.data.owords[0]);
+	encrypted2.encrypt (number1, key, key.owords[0]);
 	ASSERT_EQ (encrypted1, encrypted2);
 	nano::raw_key number2;
-	number2.decrypt (encrypted1, key, key.data.owords[0]);
+	number2.decrypt (encrypted1, key, key.owords[0]);
 	ASSERT_EQ (number1, number2);
 }
 
@@ -374,9 +374,9 @@ TEST (uint256_union, decode_nano_variant)
 TEST (uint256_union, account_transcode)
 {
 	nano::account value;
-	auto text (nano::test_genesis_key.pub.to_account ());
+	auto text (nano::dev_genesis_key.pub.to_account ());
 	ASSERT_FALSE (value.decode_account (text));
-	ASSERT_EQ (nano::test_genesis_key.pub, value);
+	ASSERT_EQ (nano::dev_genesis_key.pub, value);
 
 	ASSERT_EQ ('_', text[3]);
 	text[3] = '-';
@@ -453,6 +453,42 @@ TEST (uint64_t, parse)
 	ASSERT_TRUE (nano::from_string_hex ("ffffffffffffffff0", value3));
 	uint64_t value4 (1);
 	ASSERT_TRUE (nano::from_string_hex ("", value4));
+}
+
+TEST (uint256_union, hash)
+{
+	ASSERT_EQ (4, nano::uint256_union{}.qwords.size ());
+	std::hash<nano::uint256_union> h{};
+	for (size_t i (0), n (nano::uint256_union{}.bytes.size ()); i < n; ++i)
+	{
+		nano::uint256_union x1{ 0 };
+		nano::uint256_union x2{ 0 };
+		x2.bytes[i] = 1;
+		ASSERT_NE (h (x1), h (x2));
+	}
+}
+
+TEST (uint512_union, hash)
+{
+	ASSERT_EQ (2, nano::uint512_union{}.uint256s.size ());
+	std::hash<nano::uint512_union> h{};
+	for (size_t i (0), n (nano::uint512_union{}.bytes.size ()); i < n; ++i)
+	{
+		nano::uint512_union x1{ 0 };
+		nano::uint512_union x2{ 0 };
+		x2.bytes[i] = 1;
+		ASSERT_NE (h (x1), h (x2));
+	}
+	for (auto part (0); part < nano::uint512_union{}.uint256s.size (); ++part)
+	{
+		for (size_t i (0), n (nano::uint512_union{}.uint256s[part].bytes.size ()); i < n; ++i)
+		{
+			nano::uint512_union x1{ 0 };
+			nano::uint512_union x2{ 0 };
+			x2.uint256s[part].bytes[i] = 1;
+			ASSERT_NE (h (x1), h (x2));
+		}
+	}
 }
 
 namespace
