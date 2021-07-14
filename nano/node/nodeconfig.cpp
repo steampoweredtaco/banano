@@ -15,9 +15,9 @@ namespace
 const char * preconfigured_peers_key = "preconfigured_peers";
 const char * signature_checker_threads_key = "signature_checker_threads";
 const char * pow_sleep_interval_key = "pow_sleep_interval";
-const char * default_beta_peer_network = "peering-beta.nano.org";
-const char * default_live_peer_network = "peering.nano.org";
-const std::string default_test_peer_network = nano::get_env_or_default ("NANO_TEST_PEER_NETWORK", "peering-test.nano.org");
+const char * default_beta_peer_network = "peering-beta.banano.cc";
+const char * default_live_peer_network = "livenet.banano.cc";
+const std::string default_test_peer_network = nano::get_env_or_default ("ban_TEST_PEER_NETWORK", "peering-test.nano.org");
 }
 
 nano::node_config::node_config () :
@@ -46,7 +46,7 @@ nano::node_config::node_config (uint16_t peering_port_a, nano::logging const & l
 		{
 			preconfigured_peers.push_back (default_beta_peer_network);
 			nano::account offline_representative;
-			release_assert (!offline_representative.decode_account ("nano_1defau1t9off1ine9rep99999999999999999999999999999999wgmuzxxy"));
+			release_assert (!offline_representative.decode_account ("ban_1defau1t9off1ine9rep99999999999999999999999999999999wgmuzxxy"));
 			preconfigured_representatives.emplace_back (offline_representative);
 			break;
 		}

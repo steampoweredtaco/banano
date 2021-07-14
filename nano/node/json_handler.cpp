@@ -105,11 +105,11 @@ void nano::json_handler::process_request (bool unsafe_a)
 			{
 				ban_to_raw (nano::banoshi_ratio);
 			}
-			else if (action == "nano_from_raw" || action == "rai_from_raw")
+			else if (action == "ban_from_raw" || action == "rai_from_raw")
 			{
 				ban_from_raw (nano::raw_ratio);
 			}
-			else if (action == "nano_to_raw" || action == "rai_to_raw")
+			else if (action == "ban_to_raw" || action == "rai_to_raw")
 			{
 				ban_to_raw (nano::raw_ratio);
 			}

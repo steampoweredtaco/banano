@@ -320,7 +320,7 @@ nano::opencl_work::opencl_work (bool & error_a, nano::opencl_config const & conf
 										if (!error_a)
 										{
 											cl_int kernel_error (0);
-											kernel = clCreateKernel (program, "nano_work", &kernel_error);
+											kernel = clCreateKernel (program, "ban_work", &kernel_error);
 											error_a |= kernel_error != CL_SUCCESS;
 											if (!error_a)
 											{

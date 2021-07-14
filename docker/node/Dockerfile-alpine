@@ -12,7 +12,7 @@ RUN mkdir /tmp/build && \
     -DNANO_ROCKSDB=ON -DNANO_POW_SERVER=ON -DROCKSDB_LIBRARIES=/usr/local/rocksdb/lib/librocksdb.a \
     -DROCKSDB_INCLUDE_DIRS=/usr/local/rocksdb/include && \
     make bananode -j$(nproc) && \
-    make banano_rpc -j$(nproc) && \
+    make babanano_rpc -j$(nproc) && \
     make nano_pow_server -j$(nproc) && \
     cd .. && \
     echo ${NETWORK} > /etc/nano-network
@@ -24,7 +24,7 @@ FROM alpine:3.11.6
 RUN apk --no-cache add curl
 
 COPY --from=0 /tmp/build/bananode /usr/bin
-COPY --from=0 /tmp/build/banano_rpc /usr/bin
+COPY --from=0 /tmp/build/babanano_rpc /usr/bin
 COPY --from=0 /tmp/build/nano_pow_server /usr/bin
 COPY --from=0 /etc/nano-network /etc
 COPY docker/node/entry.sh /usr/bin/entry.sh

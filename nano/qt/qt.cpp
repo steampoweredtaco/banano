@@ -1000,7 +1000,7 @@ std::string nano_qt::status::color ()
 }
 
 nano_qt::wallet::wallet (QApplication & application_a, nano_qt::eventloop_processor & processor_a, nano::node & node_a, std::shared_ptr<nano::wallet> const & wallet_a, nano::account & account_a) :
-	rendering_ratio (nano::Mxrb_ratio),
+	rendering_ratio (nano::Mraw_ratio),
 	node (node_a),
 	wallet_m (wallet_a),
 	account (account_a),

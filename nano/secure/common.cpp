@@ -26,10 +26,10 @@ nano::nano_networks nano::network_constants::active_network = nano::nano_network
 namespace
 {
 char const * dev_private_key_data = "34F0A37AAD20F4A260F0A5B3CB3D7FB50673212263E58A380BC10474BB039CE4";
-char const * dev_public_key_data = "B0311EA55708D6A53C75CDBF88300259C6D018522FE3D4D0A242E431F9E8B6D0"; // xrb_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpiij4txtdo
-char const * beta_public_key_data = "259A43ABDB779E97452E188BA3EB951B41C961D3318CA6B925380F4D99F0577A"; // nano_1betagoxpxwykx4kw86dnhosc8t3s7ix8eeentwkcg1hbpez1outjrcyg4n1
-char const * live_public_key_data = "E89208DD038FBB269987689621D52292AE9C35941A7484756ECCED92A65093BA"; // xrb_3t6k35gi95xu6tergt6p69ck76ogmitsa8mnijtpxm9fkcm736xtoncuohr3
-std::string const test_public_key_data = nano::get_env_or_default ("NANO_TEST_GENESIS_PUB", "45C6FF9D1706D61F0821327752671BDA9F9ED2DA40326B01935AB566FB9E08ED"); // nano_1jg8zygjg3pp5w644emqcbmjqpnzmubfni3kfe1s8pooeuxsw49fdq1mco9j
+char const * dev_public_key_data = "B0311EA55708D6A53C75CDBF88300259C6D018522FE3D4D0A242E431F9E8B6D0"; // ban_3e3j5tkog48pnny9dmfzj1r16pg8t1e76dz5tmac6iq689wyjfpiij4txtdo
+char const * beta_public_key_data = "A59A47CC4F593E75AE9AD653FDA9358E2F7898D9ACC8C60E80D0495CE20FBA9F"; // ban_3betaz86ypbygpqbookmzpnmd5jhh4efmd8arr9a3n4bdmj1zgnzad7xpmfp
+char const * live_public_key_data = "2514452A978F08D1CF76BB40B6AD064183CF275D3CC5D3E0515DC96E2112AD4E"; // ban_1bananobh5rat99qfgt1ptpieie5swmoth87thi74qgbfrij7dcgjiij94xr
+std::string const test_public_key_data = nano::get_env_or_default ("ban_TEST_GENESIS_PUB", "45C6FF9D1706D61F0821327752671BDA9F9ED2DA40326B01935AB566FB9E08ED"); // nano_1jg8zygjg3pp5w644emqcbmjqpnzmubfni3kfe1s8pooeuxsw49fdq1mco9j
 char const * dev_genesis_data = R"%%%({
 	"type": "open",
 	"source": "B0311EA55708D6A53C75CDBF88300259C6D018522FE3D4D0A242E431F9E8B6D0",
@@ -42,8 +42,8 @@ char const * dev_genesis_data = R"%%%({
 char const * beta_genesis_data = R"%%%({
 	"type": "open",
 	"source": "259A43ABDB779E97452E188BA3EB951B41C961D3318CA6B925380F4D99F0577A",
-	"representative": "nano_1betagoxpxwykx4kw86dnhosc8t3s7ix8eeentwkcg1hbpez1outjrcyg4n1",
-	"account": "nano_1betagoxpxwykx4kw86dnhosc8t3s7ix8eeentwkcg1hbpez1outjrcyg4n1",
+	"representative": "ban_1betagoxpxwykx4kw86dnhosc8t3s7ix8eeentwkcg1hbpez1outjrcyg4n1",
+	"account": "ban_1betagoxpxwykx4kw86dnhosc8t3s7ix8eeentwkcg1hbpez1outjrcyg4n1",
 	"work": "79d4e27dc873c6f2",
 	"signature": "4BD7F96F9ED2721BCEE5EAED400EA50AD00524C629AE55E9AFF11220D2C1B00C3D4B3BB770BF67D4F8658023B677F91110193B6C101C2666931F57046A6DB806"
 	})%%%";
@@ -57,11 +57,11 @@ char const * live_genesis_data = R"%%%({
 	"signature": "533DCAB343547B93C4128E779848DEA5877D3278CB5EA948BB3A9AA1AE0DB293DE6D9DA4F69E8D1DDFA385F9B4C5E4F38DFA42C00D7B183560435D07AFA18900"
 	})%%%";
 
-std::string const test_genesis_data = nano::get_env_or_default ("NANO_TEST_GENESIS_BLOCK", R"%%%({
+std::string const test_genesis_data = nano::get_env_or_default ("ban_TEST_GENESIS_BLOCK", R"%%%({
 	"type": "open",
 	"source": "45C6FF9D1706D61F0821327752671BDA9F9ED2DA40326B01935AB566FB9E08ED",
-	"representative": "nano_1jg8zygjg3pp5w644emqcbmjqpnzmubfni3kfe1s8pooeuxsw49fdq1mco9j",
-	"account": "nano_1jg8zygjg3pp5w644emqcbmjqpnzmubfni3kfe1s8pooeuxsw49fdq1mco9j",
+	"representative": "ban_1jg8zygjg3pp5w644emqcbmjqpnzmubfni3kfe1s8pooeuxsw49fdq1mco9j",
+	"account": "ban_1jg8zygjg3pp5w644emqcbmjqpnzmubfni3kfe1s8pooeuxsw49fdq1mco9j",
 	"work": "bc1ef279c1a34eb1",
 	"signature": "15049467CAEE3EC768639E8E35792399B6078DA763DA4EBA8ECAD33B0EDC4AF2E7403893A5A602EB89B978DABEF1D6606BB00F3C0EE11449232B143B6E07170E"
 	})%%%");
@@ -76,7 +76,7 @@ std::shared_ptr<nano::block> parse_block_from_genesis_data (std::string const & 
 
 char const * beta_canary_public_key_data = "868C6A9F79D4506E029B378262B91538C5CB26D7C346B63902FFEB365F1C1947"; // nano_33nefchqmo4ifr3bpfw4ecwjcg87semfhit8prwi7zzd8shjr8c9qdxeqmnx
 char const * live_canary_public_key_data = "7CBAF192A3763DAEC9F9BAC1B2CDF665D8369F8400B4BC5AB4BA31C00BAA4404"; // nano_1z7ty8bc8xjxou6zmgp3pd8zesgr8thra17nqjfdbgjjr17tnj16fjntfqfn
-std::string const test_canary_public_key_data = nano::get_env_or_default ("NANO_TEST_CANARY_PUB", "3BAD2C554ACE05F5E528FBBCE79D51E552C55FA765CCFD89B289C4835DE5F04A"); // nano_1gxf7jcnomi7yqkkjyxwwygo5sckrohtgsgezp6u74g6ifgydw4cajwbk8bf
+std::string const test_canary_public_key_data = nano::get_env_or_default ("ban_TEST_CANARY_PUB", "3BAD2C554ACE05F5E528FBBCE79D51E552C55FA765CCFD89B289C4835DE5F04A"); // nano_1gxf7jcnomi7yqkkjyxwwygo5sckrohtgsgezp6u74g6ifgydw4cajwbk8bf
 }
 
 nano::network_params::network_params () :
@@ -90,7 +90,7 @@ nano::network_params::network_params (nano::nano_networks network_a) :
 	unsigned constexpr kdf_full_work = 64 * 1024;
 	unsigned constexpr kdf_dev_work = 8;
 	kdf_work = network.is_dev_network () ? kdf_dev_work : kdf_full_work;
-	header_magic_number = network.is_dev_network () ? std::array<uint8_t, 2>{ { 'R', 'A' } } : network.is_beta_network () ? std::array<uint8_t, 2>{ { 'R', 'B' } } : network.is_live_network () ? std::array<uint8_t, 2>{ { 'R', 'C' } } : nano::test_magic_number ();
+	header_magic_number = network.is_test_network () ? std::array<uint8_t, 2>{ { 'B', 'Z' } } : network.is_beta_network () ? std::array<uint8_t, 2>{ { 'B', 'Y' } } : std::array<uint8_t, 2>{ { 'B', 'X' } };
 }
 
 uint8_t nano::protocol_constants::protocol_version_min () const
@@ -137,7 +137,7 @@ nano::ledger_constants::ledger_constants (nano::nano_networks network_a) :
 
 	nano::link epoch_link_v2;
 	nano::account nano_live_epoch_v2_signer;
-	auto error (nano_live_epoch_v2_signer.decode_account ("nano_3qb6o6i1tkzr6jwr5s7eehfxwg9x6eemitdinbpi7u8bjjwsgqfj4wzser3x"));
+	auto error (nano_live_epoch_v2_signer.decode_account ("ban_3qb6o6i1tkzr6jwr5s7eehfxwg9x6eemitdinbpi7u8bjjwsgqfj4wzser3x"));
 	debug_assert (!error);
 	auto epoch_v2_signer (network_a == nano::nano_networks::nano_dev_network ? nano_dev_account : network_a == nano::nano_networks::nano_beta_network ? nano_beta_account : network_a == nano::nano_networks::nano_test_network ? nano_test_account : nano_live_epoch_v2_signer);
 	const char * epoch_message_v2 ("epoch v2 block");

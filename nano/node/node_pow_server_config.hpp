@@ -17,7 +17,7 @@ inline std::string get_default_pow_server_filepath ()
 	auto running_executable_filepath = boost::dll::program_location (err);
 
 	// Construct the nano_pow_server executable file path based on where the currently running executable is found.
-	auto pow_server_filepath = running_executable_filepath.parent_path () / "nano_pow_server";
+	auto pow_server_filepath = running_executable_filepath.parent_path () / "ban_pow_server";
 	if (running_executable_filepath.has_extension ())
 	{
 		pow_server_filepath.replace_extension (running_executable_filepath.extension ());

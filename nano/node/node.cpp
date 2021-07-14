@@ -397,7 +397,7 @@ nano::node::node (boost::asio::io_context & io_ctx_a, boost::filesystem::path co
 				ledger.bootstrap_weights = bootstrap_weights.second;
 				for (auto const & rep : ledger.bootstrap_weights)
 				{
-					logger.always_log ("Using bootstrap rep weight: ", rep.first.to_account (), " -> ", nano::uint128_union (rep.second).format_balance (Mxrb_ratio, 0, true), " XRB");
+					logger.always_log ("Using bootstrap rep weight: ", rep.first.to_account (), " -> ", nano::uint128_union (rep.second).format_balance (Mraw_ratio, 0, true), " XRB");
 				}
 			}
 			ledger.bootstrap_weight_max_blocks = bootstrap_weights.first;
@@ -1092,7 +1092,7 @@ void nano::node::ongoing_ledger_pruning ()
 
 int nano::node::price (nano::uint128_t const & balance_a, int amount_a)
 {
-	debug_assert (balance_a >= amount_a * nano::Gxrb_ratio);
+	debug_assert (balance_a >= amount_a * nano::kBAN_ratio);
 	auto balance_l (balance_a);
 	double result (0.0);
 	for (auto i (0); i < amount_a; ++i)

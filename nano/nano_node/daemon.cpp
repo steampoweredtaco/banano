@@ -2,7 +2,7 @@
 #include <nano/lib/signal_manager.hpp>
 #include <nano/lib/threading.hpp>
 #include <nano/lib/utility.hpp>
-#include <nano/nano_node/daemon.hpp>
+#include <nano/bananode/daemon.hpp>
 #include <nano/node/cli.hpp>
 #include <nano/node/daemonconfig.hpp>
 #include <nano/node/ipc/ipc_server.hpp>
@@ -97,7 +97,7 @@ void nano_daemon::daemon::run (boost::filesystem::path const & data_path, nano::
 				{
 					if (!boost::filesystem::exists (config.pow_server.pow_server_path))
 					{
-						std::cerr << std::string ("nano_pow_server is configured to start as a child process, however the file cannot be found at: ") + config.pow_server.pow_server_path << std::endl;
+						std::cerr << std::string ("ban_pow_server is configured to start as a child process, however the file cannot be found at: ") + config.pow_server.pow_server_path << std::endl;
 						std::exit (1);
 					}
 

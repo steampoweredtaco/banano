@@ -34,7 +34,7 @@ nano::error nano::daemon_config::serialize_toml (nano::tomlconfig & toml)
 	nano::tomlconfig pow_server_l;
 	pow_server.serialize_toml (pow_server_l);
 	nano::tomlconfig pow_server (pow_server_l);
-	toml.put_child ("nano_pow_server", pow_server);
+	toml.put_child ("ban_pow_server", pow_server);
 
 	return toml.get_error ();
 }
@@ -61,7 +61,7 @@ nano::error nano::daemon_config::deserialize_toml (nano::tomlconfig & toml)
 		opencl.deserialize_toml (*opencl_l);
 	}
 
-	auto pow_l (toml.get_optional_child ("nano_pow_server"));
+	auto pow_l (toml.get_optional_child ("ban_pow_server"));
 	if (!toml.get_error () && pow_l)
 	{
 		pow_server.deserialize_toml (*pow_l);

@@ -317,7 +317,7 @@ int main (int argc, char * const * argv)
 	}
 	else
 	{
-		auto node_filepath = running_executable_filepath.parent_path () / "nano_node";
+		auto node_filepath = running_executable_filepath.parent_path () / "ban_node";
 		if (running_executable_filepath.has_extension ())
 		{
 			node_filepath.replace_extension (running_executable_filepath.extension ());
@@ -326,7 +326,7 @@ int main (int argc, char * const * argv)
 	}
 	if (!boost::filesystem::exists (node_path))
 	{
-		std::cerr << "nano_node executable could not be found in " << node_path << std::endl;
+		std::cerr << "ban_node executable could not be found in " << node_path << std::endl;
 		return 1;
 	}
 
@@ -338,7 +338,7 @@ int main (int argc, char * const * argv)
 	}
 	else
 	{
-		auto rpc_filepath = running_executable_filepath.parent_path () / "nano_rpc";
+		auto rpc_filepath = running_executable_filepath.parent_path () / "ban_rpc";
 		if (running_executable_filepath.has_extension ())
 		{
 			rpc_filepath.replace_extension (running_executable_filepath.extension ());
@@ -347,7 +347,7 @@ int main (int argc, char * const * argv)
 	}
 	if (!boost::filesystem::exists (rpc_path))
 	{
-		std::cerr << "nano_rpc executable could not be found in " << rpc_path << std::endl;
+		std::cerr << "ban_rpc executable could not be found in " << rpc_path << std::endl;
 		return 1;
 	}
 

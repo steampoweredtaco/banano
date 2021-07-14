@@ -154,7 +154,7 @@ int run_wallet (QApplication & application, int argc, char * const * argv, boost
 				if (!boost::filesystem::exists (config.pow_server.pow_server_path))
 				{
 					splash->hide ();
-					show_error (std::string ("nano_pow_server is configured to start as a child process, however the file cannot be found at: ") + config.pow_server.pow_server_path);
+					show_error (std::string ("ban_pow_server is configured to start as a child process, however the file cannot be found at: ") + config.pow_server.pow_server_path);
 					std::exit (1);
 				}
 

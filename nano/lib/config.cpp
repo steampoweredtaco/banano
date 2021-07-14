@@ -45,9 +45,9 @@ work_thresholds const network_constants::publish_dev (
 );
 
 work_thresholds const network_constants::publish_test ( //defaults to live network levels
-get_env_threshold_or_default ("NANO_TEST_EPOCH_1", 0xffffffc000000000),
-get_env_threshold_or_default ("NANO_TEST_EPOCH_2", 0xfffffff800000000), // 8x higher than epoch_1
-get_env_threshold_or_default ("NANO_TEST_EPOCH_2_RECV", 0xfffffe0000000000) // 8x lower than epoch_1
+get_env_threshold_or_default ("ban_TEST_EPOCH_1", 0xffffffc000000000),
+get_env_threshold_or_default ("ban_TEST_EPOCH_2", 0xfffffff800000000), // 8x higher than epoch_1
+get_env_threshold_or_default ("ban_TEST_EPOCH_2_RECV", 0xfffffe0000000000) // 8x lower than epoch_1
 );
 
 const char * network_constants::active_network_err_msg = "Invalid network. Valid values are live, test, beta and dev.";
@@ -83,28 +83,28 @@ uint64_t get_env_threshold_or_default (char const * variable_name, uint64_t cons
 
 uint16_t test_node_port ()
 {
-	auto test_env = nano::get_env_or_default ("NANO_TEST_NODE_PORT", "17075");
+	auto test_env = nano::get_env_or_default ("ban_TEST_NODE_PORT", "17075");
 	return boost::lexical_cast<uint16_t> (test_env);
 }
 uint16_t test_rpc_port ()
 {
-	auto test_env = nano::get_env_or_default ("NANO_TEST_RPC_PORT", "17076");
+	auto test_env = nano::get_env_or_default ("ban_TEST_RPC_PORT", "17076");
 	return boost::lexical_cast<uint16_t> (test_env);
 }
 uint16_t test_ipc_port ()
 {
-	auto test_env = nano::get_env_or_default ("NANO_TEST_IPC_PORT", "17077");
+	auto test_env = nano::get_env_or_default ("ban_TEST_IPC_PORT", "17077");
 	return boost::lexical_cast<uint16_t> (test_env);
 }
 uint16_t test_websocket_port ()
 {
-	auto test_env = nano::get_env_or_default ("NANO_TEST_WEBSOCKET_PORT", "17078");
+	auto test_env = nano::get_env_or_default ("ban_TEST_WEBSOCKET_PORT", "17078");
 	return boost::lexical_cast<uint16_t> (test_env);
 }
 
 std::array<uint8_t, 2> test_magic_number ()
 {
-	auto test_env = get_env_or_default ("NANO_TEST_MAGIC_NUMBER", "RX");
+	auto test_env = get_env_or_default ("ban_TEST_MAGIC_NUMBER", "RX");
 	std::array<uint8_t, 2> ret;
 	std::copy (test_env.begin (), test_env.end (), ret.data ());
 	return ret;
