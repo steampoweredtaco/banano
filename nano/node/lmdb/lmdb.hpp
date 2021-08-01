@@ -266,8 +266,6 @@ private:
 
 	bool vacuum_after_upgrade (boost::filesystem::path const & path_a, nano::lmdb_config const & lmdb_config_a);
 
-	bool vacuum_after_upgrade (boost::filesystem::path const & path_a, int lmdb_max_dbs);
-
 	class upgrade_counters
 	{
 	public:
