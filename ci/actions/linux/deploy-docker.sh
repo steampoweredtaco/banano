@@ -2,6 +2,8 @@
 
 set -e
 
+LOWERCASE_GITHUB_REPOSITORY=bananocoin/banano
+
 scripts="$PWD/ci"
 TRAVIS_BRANCH=$(git branch | cut -f2 -d' ')
 tags=()
@@ -29,7 +31,7 @@ elif [[ "$GITHUB_WORKFLOW" = "Test" ]]; then
 fi
 if [[ "$GITHUB_WORKFLOW" != "Develop" ]]; then
     docker_image_name="nanocurrency/nano${network_tag_suffix}"
-    ghcr_image_name="ghcr.io/${GITHUB_REPOSITORY}/nano${network_tag_suffix}"
+    ghcr_image_name="ghcr.io/${LOWERCASE_GITHUB_REPOSITORY}/nano${network_tag_suffix}"
     "$scripts"/build-docker-image.sh docker/node/Dockerfile "$docker_image_name" --build-arg NETWORK="$network" --build-arg CI_BUILD=true --build-arg TRAVIS_TAG="$TRAVIS_TAG"
     for tag in "${tags[@]}"; do
         # Sanitize docker tag
