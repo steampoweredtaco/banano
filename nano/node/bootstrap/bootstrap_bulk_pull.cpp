@@ -371,7 +371,7 @@ void nano::bulk_pull_account_client::receive_pending ()
 						}
 						else
 						{
-							this_l->connection->attempt->requeue_pending (this_l->account);
+							this_l->attempt->requeue_pending (this_l->account);
 						}
 					}
 					else
