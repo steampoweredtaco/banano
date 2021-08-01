@@ -1647,7 +1647,7 @@ TEST (node, DISABLED_fork_stale)
 				 .account (nano::dev_genesis_key.pub)
 				 .previous (genesis.hash ())
 				 .representative (nano::dev_genesis_key.pub)
-				 .balance (nano::genesis_amount - nano::Mraw_ratio)
+				 .balance (nano::genesis_amount - nano::BAN_ratio)
 				 .link (key1.pub)
 				 .sign (nano::dev_genesis_key.prv, nano::dev_genesis_key.pub)
 				 .work (0)
@@ -1664,7 +1664,7 @@ TEST (node, DISABLED_fork_stale)
 				 .account (nano::dev_genesis_key.pub)
 				 .previous (send3->hash ())
 				 .representative (nano::dev_genesis_key.pub)
-				 .balance (nano::genesis_amount - 2 * nano::Mraw_ratio)
+				 .balance (nano::genesis_amount - 2 * nano::BAN_ratio)
 				 .link (key1.pub)
 				 .sign (nano::dev_genesis_key.prv, nano::dev_genesis_key.pub)
 				 .work (0)
@@ -1674,7 +1674,7 @@ TEST (node, DISABLED_fork_stale)
 				 .account (nano::dev_genesis_key.pub)
 				 .previous (send3->hash ())
 				 .representative (nano::dev_genesis_key.pub)
-				 .balance (nano::genesis_amount - 2 * nano::Mraw_ratio)
+				 .balance (nano::genesis_amount - 2 * nano::BAN_ratio)
 				 .link (key2.pub)
 				 .sign (nano::dev_genesis_key.prv, nano::dev_genesis_key.pub)
 				 .work (0)
@@ -2082,15 +2082,15 @@ TEST (node, DISABLED_unconfirmed_send)
 	nano::keypair key0;
 	wallet1->insert_adhoc (key0.prv);
 	wallet0->insert_adhoc (nano::dev_genesis_key.prv);
-	auto send1 (wallet0->send_action (nano::genesis_account, key0.pub, 2 * nano::Mraw_ratio));
-	ASSERT_TIMELY (10s, node1.balance (key0.pub) == 2 * nano::Mraw_ratio && !node1.bootstrap_initiator.in_progress ());
+	auto send1 (wallet0->send_action (nano::genesis_account, key0.pub, 2 * nano::BAN_ratio));
+	ASSERT_TIMELY (10s, node1.balance (key0.pub) == 2 * nano::BAN_ratio && !node1.bootstrap_initiator.in_progress ());
 	auto latest (node1.latest (key0.pub));
 	nano::state_block send2 (key0.pub, latest, nano::genesis_account, nano::BAN_ratio, nano::genesis_account, key0.prv, key0.pub, *node0.work_generate_blocking (latest));
 	{
 		auto transaction (node1.store.tx_begin_write ());
 		ASSERT_EQ (nano::process_result::progress, node1.ledger.process (transaction, send2).code);
 	}
-	auto send3 (wallet1->send_action (key0.pub, nano::genesis_account, nano::Mraw_ratio));
+	auto send3 (wallet1->send_action (key0.pub, nano::genesis_account, nano::BAN_ratio));
 	ASSERT_TIMELY (10s, node0.balance (nano::genesis_account) == nano::genesis_amount);
 }
 
@@ -2105,7 +2105,7 @@ TEST (node, rep_list)
 	wallet0->insert_adhoc (nano::dev_genesis_key.prv);
 	nano::keypair key1;
 	// Broadcast a confirm so others should know this is a rep node
-	wallet0->send_action (nano::dev_genesis_key.pub, key1.pub, nano::Mraw_ratio);
+	wallet0->send_action (nano::dev_genesis_key.pub, key1.pub, nano::BAN_ratio);
 	ASSERT_EQ (0, node1.rep_crawler.representatives (1).size ());
 	system.deadline_set (10s);
 	auto done (false);
@@ -2348,7 +2348,7 @@ TEST (node, no_voting)
 	nano::keypair key1;
 	wallet1->insert_adhoc (key1.prv);
 	// Broadcast a confirm so others should know this is a rep node
-	wallet1->send_action (nano::dev_genesis_key.pub, key1.pub, nano::Mraw_ratio);
+	wallet1->send_action (nano::dev_genesis_key.pub, key1.pub, nano::BAN_ratio);
 	ASSERT_TIMELY (10s, node0.active.empty ());
 	ASSERT_EQ (0, node0.stats.count (nano::stat::type::message, nano::stat::detail::confirm_ack, nano::stat::dir::in));
 }

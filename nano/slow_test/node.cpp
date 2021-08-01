@@ -1447,7 +1447,7 @@ TEST (telemetry, many_nodes)
 	// Give all nodes a non-default number of blocks
 	nano::keypair key;
 	nano::genesis genesis;
-	nano::state_block send (nano::dev_genesis_key.pub, genesis.hash (), nano::dev_genesis_key.pub, nano::genesis_amount - nano::Mraw_ratio, key.pub, nano::dev_genesis_key.prv, nano::dev_genesis_key.pub, *system.work.generate (genesis.hash ()));
+	nano::state_block send (nano::dev_genesis_key.pub, genesis.hash (), nano::dev_genesis_key.pub, nano::genesis_amount - nano::BAN_ratio, key.pub, nano::dev_genesis_key.prv, nano::dev_genesis_key.pub, *system.work.generate (genesis.hash ()));
 	for (auto node : system.nodes)
 	{
 		auto transaction (node->store.tx_begin_write ());
