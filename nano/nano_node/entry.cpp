@@ -1,7 +1,7 @@
 #include <nano/crypto_lib/random_pool.hpp>
 #include <nano/lib/cli.hpp>
 #include <nano/lib/utility.hpp>
-#include <nano/bananode/daemon.hpp>
+#include <nano/nano_node/daemon.hpp>
 #include <nano/node/cli.hpp>
 #include <nano/node/daemonconfig.hpp>
 #include <nano/node/ipc/ipc_server.hpp>
