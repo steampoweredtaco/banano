@@ -3,7 +3,7 @@
 
 
 # What is Banano?
-Banano is designed to be a feeless, instant, high throughput cryptocurrency for the meme economy. 
+Banano is designed to be a feeless, instant, high throughput cryptocurrency for the meme economy.
 
 ### Key features
 * Banano utilizes a novel block-lettuce architecture.
@@ -41,6 +41,7 @@ For more information, see [Banano.cc](https://banano.cc).
 - [Running a Docker node](https://github.com/BananoCoin/banano/wiki/Running-a-Docker-Bananode)
 
 ### Want to contribute?
+
 
 ### Contact us
 You can reach us via the [Discord](https://chat.banano.cc) or our [Reddit](http://reddit.com/r/banano).
