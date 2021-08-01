@@ -149,9 +149,6 @@ nano::error nano::read_node_config_toml (boost::filesystem::path const & data_pa
 		}
 		else
 		{
-			// Run RPC Migration
-			nano::rpc_config rpc_config;
-			auto error = nano::read_and_update_rpc_config (data_path_a, rpc_config);			
 			// Migrate
 			nano::daemon_config config_old_l;
 			nano::jsonconfig json;
