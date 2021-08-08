@@ -551,7 +551,7 @@ add_subdirectory(nano/crypto_lib)
 add_subdirectory(nano/secure)
 add_subdirectory(nano/lib)
 add_subdirectory(nano/node)
-add_subdirectory(nano/bananode)
+add_subdirectory(nano/nano_node)
 add_subdirectory(nano/rpc)
 add_subdirectory(nano/nano_rpc)
 
