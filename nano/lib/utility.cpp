@@ -114,7 +114,7 @@ const nano::container_info & nano::container_info_leaf::get_info () const
 
 void nano::dump_crash_stacktrace ()
 {
-	boost::stacktrace::safe_dump_to ("nano_node_backtrace.dump");
+	boost::stacktrace::safe_dump_to ("bananode_backtrace.dump");
 }
 
 std::string nano::generate_stacktrace ()
@@ -174,7 +174,7 @@ void assert_internal (const char * check_expr, const char * func, const char * f
 		// Try construct the stacktrace dump in the same folder as the the running executable, otherwise use the current directory.
 		boost::system::error_code err;
 		auto running_executable_filepath = boost::dll::program_location (err);
-		std::string filename = is_release_assert ? "nano_node_backtrace_release_assert.txt" : "nano_node_backtrace_assert.txt";
+		std::string filename = is_release_assert ? "bananode_backtrace_release_assert.txt" : "bananode_backtrace_assert.txt";
 		std::string filepath = filename;
 		if (!err)
 		{

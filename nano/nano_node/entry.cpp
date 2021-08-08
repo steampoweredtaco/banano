@@ -1,7 +1,7 @@
 #include <nano/crypto_lib/random_pool.hpp>
 #include <nano/lib/cli.hpp>
 #include <nano/lib/utility.hpp>
-#include <nano/nano_node/daemon.hpp>
+#include <nano/bananode/daemon.hpp>
 #include <nano/node/cli.hpp>
 #include <nano/node/daemonconfig.hpp>
 #include <nano/node/ipc/ipc_server.hpp>
@@ -84,8 +84,8 @@ int main (int argc, char * const * argv)
 		("debug_profile_validate", "Profile work validation")
 		("debug_opencl", "OpenCL work generation")
 		("debug_profile_kdf", "Profile kdf function")
-		("debug_output_last_backtrace_dump", "Displays the contents of the latest backtrace in the event of a nano_node crash")
-		("debug_generate_crash_report", "Consolidates the nano_node_backtrace.dump file. Requires addr2line installed on Linux")
+		("debug_output_last_backtrace_dump", "Displays the contents of the latest backtrace in the event of a bananode crash")
+		("debug_generate_crash_report", "Consolidates the bananode_backtrace.dump file. Requires addr2line installed on Linux")
 		("debug_sys_logging", "Test the system logger")
 		("debug_verify_profile", "Profile signature verification")
 		("debug_verify_profile_batch", "Profile batch signature verification")
@@ -204,7 +204,7 @@ int main (int argc, char * const * argv)
 					std::string get_entry () const
 					{
 						return boost::str (boost::format ("representative %1% hardcoded %2% ledger %3% mismatch %4%")
-						% rep.to_account () % hardcoded.format_balance (nano::Mxrb_ratio, 0, true) % ledger.format_balance (nano::Mxrb_ratio, 0, true) % diff.format_balance (nano::Mxrb_ratio, 0, true));
+						% rep.to_account () % hardcoded.format_balance (nano::BAN_ratio, 0, true) % ledger.format_balance (nano::BAN_ratio, 0, true) % diff.format_balance (nano::BAN_ratio, 0, true));
 					}
 				};
 
@@ -233,13 +233,13 @@ int main (int argc, char * const * argv)
 
 				nano::uint128_union const mismatch_stddev = nano::narrow_cast<nano::uint128_t> (boost::multiprecision::sqrt (mismatch_variance.number ()));
 
-				auto const outlier_threshold = std::max (nano::Gxrb_ratio, mismatch_mean.number () + 1 * mismatch_stddev.number ());
+				auto const outlier_threshold = std::max (nano::MBAN_ratio, mismatch_mean.number () + 1 * mismatch_stddev.number ());
 				decltype (mismatched) outliers;
 				std::copy_if (mismatched.begin (), mismatched.end (), std::back_inserter (outliers), [outlier_threshold] (mismatched_t const & sample) {
 					return sample.diff > outlier_threshold;
 				});
 
-				auto const newcomer_threshold = std::max (nano::Gxrb_ratio, mismatch_mean.number ());
+				auto const newcomer_threshold = std::max (nano::MBAN_ratio, mismatch_mean.number ());
 				std::vector<std::pair<nano::account, nano::uint128_t>> newcomers;
 				std::copy_if (ledger.begin (), ledger.end (), std::back_inserter (newcomers), [&hardcoded] (auto const & rep) {
 					return !hardcoded.count (rep.first) && rep.second;
@@ -249,18 +249,18 @@ int main (int argc, char * const * argv)
 				std::sort (newcomers.begin (), newcomers.end (), [] (auto const & left, auto const & right) { return left.second > right.second; });
 
 				auto newcomer_entry = [] (auto const & rep) {
-					return boost::str (boost::format ("representative %1% hardcoded --- ledger %2%") % rep.first.to_account () % nano::uint128_union (rep.second).format_balance (nano::Mxrb_ratio, 0, true));
+					return boost::str (boost::format ("representative %1% hardcoded --- ledger %2%") % rep.first.to_account () % nano::uint128_union (rep.second).format_balance (nano::BAN_ratio, 0, true));
 				};
 
 				std::cout << boost::str (boost::format ("hardcoded weight %1% Mnano at %2% blocks\nledger weight %3% Mnano at %4% blocks\nmismatched\n\tsamples %5%\n\ttotal %6% Mnano\n\tmean %7% Mnano\n\tsigma %8% Mnano\n")
-				% total_hardcoded.format_balance (nano::Mxrb_ratio, 0, true)
+				% total_hardcoded.format_balance (nano::BAN_ratio, 0, true)
 				% hardcoded_height
-				% total_ledger.format_balance (nano::Mxrb_ratio, 0, true)
+				% total_ledger.format_balance (nano::BAN_ratio, 0, true)
 				% ledger_height
 				% mismatched.size ()
-				% mismatch_total.format_balance (nano::Mxrb_ratio, 0, true)
-				% mismatch_mean.format_balance (nano::Mxrb_ratio, 0, true)
-				% mismatch_stddev.format_balance (nano::Mxrb_ratio, 0, true));
+				% mismatch_total.format_balance (nano::BAN_ratio, 0, true)
+				% mismatch_mean.format_balance (nano::BAN_ratio, 0, true)
+				% mismatch_stddev.format_balance (nano::BAN_ratio, 0, true));
 
 				if (!outliers.empty ())
 				{
@@ -284,7 +284,7 @@ int main (int argc, char * const * argv)
 				}
 
 				// Log more data
-				auto const log_threshold = nano::Gxrb_ratio;
+				auto const log_threshold = nano::MBAN_ratio;
 				for (auto const & sample : mismatched)
 				{
 					if (sample.diff > log_threshold)
@@ -648,10 +648,10 @@ int main (int argc, char * const * argv)
 		}
 		else if (vm.count ("debug_output_last_backtrace_dump"))
 		{
-			if (boost::filesystem::exists ("nano_node_backtrace.dump"))
+			if (boost::filesystem::exists ("bananode_backtrace.dump"))
 			{
 				// There is a backtrace, so output the contents
-				std::ifstream ifs ("nano_node_backtrace.dump");
+				std::ifstream ifs ("bananode_backtrace.dump");
 
 				boost::stacktrace::stacktrace st = boost::stacktrace::stacktrace::from_dump (ifs);
 				std::cout << "Latest crash backtrace:\n"
@@ -660,13 +660,13 @@ int main (int argc, char * const * argv)
 		}
 		else if (vm.count ("debug_generate_crash_report"))
 		{
-			if (boost::filesystem::exists ("nano_node_backtrace.dump"))
+			if (boost::filesystem::exists ("bananode_backtrace.dump"))
 			{
 				// There is a backtrace, so output the contents
-				std::ifstream ifs ("nano_node_backtrace.dump");
+				std::ifstream ifs ("bananode_backtrace.dump");
 				boost::stacktrace::stacktrace st = boost::stacktrace::stacktrace::from_dump (ifs);
 
-				std::string crash_report_filename = "nano_node_crash_report.txt";
+				std::string crash_report_filename = "bananode_crash_report.txt";
 
 #if defined(_WIN32) || defined(__APPLE__)
 				// Only linux has load addresses, so just write the dump to a readable file.
@@ -680,7 +680,7 @@ int main (int argc, char * const * argv)
 				if (!err)
 				{
 					auto num = 0;
-					auto format = boost::format ("nano_node_crash_load_address_dump_%1%.txt");
+					auto format = boost::format ("bananode_crash_load_address_dump_%1%.txt");
 					std::vector<address_library_pair> base_addresses;
 
 					// The first one only has the load address
@@ -812,12 +812,12 @@ int main (int argc, char * const * argv)
 							<< "Using relative addresses:" << std::endl; // Add an empty line to separate the absolute & relative output
 					}
 
-					// Now run using relative addresses. This will give actual results for other dlls, the results from the nano_node executable.
+					// Now run using relative addresses. This will give actual results for other dlls, the results from the bananode executable.
 					run_addr2line (true);
 
 					if (std::find (system_codes.begin (), system_codes.end (), 0) == system_codes.end ())
 					{
-						std::cerr << "Error: Check that addr2line is installed and that nano_node_crash_load_address_dump_*.txt files exist." << std::endl;
+						std::cerr << "Error: Check that addr2line is installed and that bananode_crash_load_address_dump_*.txt files exist." << std::endl;
 						result = -1;
 					}
 				}
@@ -834,7 +834,7 @@ int main (int argc, char * const * argv)
 			}
 			else
 			{
-				std::cerr << "Error: nano_node_backtrace.dump could not be found";
+				std::cerr << "Error: bananode_backtrace.dump could not be found";
 				result = -1;
 			}
 		}
@@ -1303,7 +1303,7 @@ int main (int argc, char * const * argv)
 			 *
 			 * Example, running the entire dieharder test suite:
 			 *
-			 *   ./nano_node --debug_random_feed | dieharder -a -g 200
+			 *   ./bananode --debug_random_feed | dieharder -a -g 200
 			 */
 			nano::raw_key seed;
 			for (;;)
@@ -1896,7 +1896,7 @@ int main (int argc, char * const * argv)
 #ifdef BOOST_WINDOWS
 			if (!nano::event_log_reg_entry_exists () && !nano::is_windows_elevated ())
 			{
-				std::cerr << "The event log requires the HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\EventLog\\Nano\\Nano registry entry, run again as administator to create it.\n";
+				std::cerr << "The event log requires the HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\EventLog\\Banano\\Banano registry entry, run again as administator to create it.\n";
 				return 1;
 			}
 #endif

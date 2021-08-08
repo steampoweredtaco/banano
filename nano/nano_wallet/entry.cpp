@@ -7,7 +7,7 @@
 #include <nano/lib/tomlconfig.hpp>
 #include <nano/lib/utility.hpp>
 #include <nano/lib/walletconfig.hpp>
-#include <nano/nano_wallet/icon.hpp>
+#include <nano/banano_wallet/icon.hpp>
 #include <nano/node/cli.hpp>
 #include <nano/node/daemonconfig.hpp>
 #include <nano/node/ipc/ipc_server.hpp>
@@ -26,7 +26,7 @@ namespace
 {
 void show_error (std::string const & message_a)
 {
-	QMessageBox message (QMessageBox::Critical, "Error starting Nano", message_a.c_str ());
+	QMessageBox message (QMessageBox::Critical, "Error starting Banano", message_a.c_str ());
 	message.setModal (true);
 	message.show ();
 	message.exec ();
